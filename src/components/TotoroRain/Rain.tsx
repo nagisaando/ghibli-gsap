@@ -1,6 +1,7 @@
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { memo } from "react";
 
 function Rain() {
   useGSAP(() => {
@@ -44,7 +45,7 @@ function Rain() {
 
   return (
     <>
-      {Array.from({ length: 80 }, (_, i) => (
+      {Array.from({ length: 40 }, (_, i) => (
         <div
           key={i}
           className={`${styles.rain} rain`}
@@ -55,4 +56,4 @@ function Rain() {
   );
 }
 
-export default Rain;
+export default memo(Rain);

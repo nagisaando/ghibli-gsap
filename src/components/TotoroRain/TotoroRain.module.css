@@ -48,7 +48,13 @@
   right: 10%;
 }
 
-.totoro-pupil {
+.satsuki {
+  position: absolute;
+  bottom: 75px;
+  right: 40%;
+}
+
+.eye-pupil {
   background-color: #10100e;
   width: 10px;
   height: 10px;
@@ -57,10 +63,9 @@
   top: 10px;
 }
 
-.totoro-eye {
+.eye {
   background-color: #99a4ba;
   width: 30px;
   height: 30px;
   position: absolute;
-  top: 170px;
 }

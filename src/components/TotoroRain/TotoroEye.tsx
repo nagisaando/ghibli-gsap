@@ -1,6 +1,5 @@
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { useEffect, useRef } from "react";
 
 interface TotoroEyeProps {

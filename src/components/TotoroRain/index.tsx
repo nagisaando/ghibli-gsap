@@ -6,10 +6,22 @@ import Rain from "./Rain";
 import Ground from "./Ground";
 import RainSplash from "./RainSplash";
 import Totoro from "./Totoro";
+import { useEffect, useState } from "react";
+import HardRain from "./HardRain";
+import Satsuki from "./Satsuki";
 
 gsap.registerPlugin(useGSAP);
 
 function TotoroRain() {
+  const [rainHard, setRainHard] = useState(false);
+
+  function toggleRainHard() {
+    setRainHard((prev) => !prev);
+  }
+  useEffect(() => {
+    const myInterval = setInterval(toggleRainHard, 5000);
+    return () => clearInterval(myInterval);
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles["ground-rain-container"]}>
@@ -24,8 +36,10 @@ function TotoroRain() {
         ))}
         <RainSplash variant="small" />
       </div>
-      <Totoro />
-      {/* <Rain /> */}
+      <Totoro rainHard={rainHard} />
+      <Satsuki rainHard={false} />
+      <Rain />
+      <HardRain rainHard={rainHard} />
     </div>
   );
 }
