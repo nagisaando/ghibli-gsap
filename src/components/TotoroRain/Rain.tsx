@@ -1,8 +1,7 @@
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Physics2DPlugin from "gsap-trial/Physics2DPlugin";
-gsap.registerPlugin(Physics2DPlugin);
+
 function Rain() {
   useGSAP(() => {
     gsap.utils.toArray(".rain").forEach((element) => {

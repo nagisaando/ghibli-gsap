@@ -1,10 +1,14 @@
-import rainSplash from "../../assets/rain-splash-1.svg";
+import rainSplashLarge from "../../assets/rain-splash-large.svg";
+import rainSplashSmall from "../../assets/rain-splash-small.svg";
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-function RainSplash() {
+interface RainSplashProps {
+  variant?: "large" | "small";
+}
+function RainSplash({ variant = "large" }: RainSplashProps) {
   const rainSplashImg = useRef<HTMLImageElement>(null);
 
   useGSAP(
@@ -42,7 +46,7 @@ function RainSplash() {
     <div>
       <img
         ref={rainSplashImg}
-        src={rainSplash}
+        src={variant === "large" ? rainSplashLarge : rainSplashSmall}
         className={`${styles["rain-splash"]} rain-splash`}
         aria-hidden="true"
       />
