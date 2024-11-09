@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import totoro from "../../assets/totoro.svg";
 import Eye from "./Eye";
 import styles from "./TotoroRain.module.css";
@@ -6,10 +6,40 @@ import gsap from "gsap";
 
 interface TotoroProps {
   rainHard?: boolean;
+  setRainHard: Dispatch<SetStateAction<boolean>>;
+  jump?: boolean;
 }
 
-function Totoro({ rainHard }: TotoroProps) {
+function Totoro({ rainHard, jump, setRainHard }: TotoroProps) {
   const totoroRef = useRef<HTMLDivElement>(null);
+
+  function jumpToggle() {
+    const tl = gsap.timeline();
+
+    tl.fromTo(".totoro", { y: 0, scaleY: 1 }, { y: 100, scaleY: 0.8 }, 0.2)
+      .to(".totoro", { y: -175 }, 0.2)
+      .to(".totoro", { y: -4, ease: "power1.in" }, ">")
+      .to(".totoro", {
+        scaleY: 0.8,
+        scaleX: 1.3,
+        duration: 0.2,
+        transformOrigin: "50% 100%",
+      })
+      .to(".totoro", {
+        y: 0,
+        scaleY: 1,
+        scaleX: 1,
+        onComplete: () => {
+          setRainHard(true);
+        },
+      });
+  }
+
+  useEffect(() => {
+    if (jump) {
+      jumpToggle();
+    }
+  }, [jump]);
   useEffect(() => {
     function moveEye(e: MouseEvent) {
       const { clientX, clientY } = e;

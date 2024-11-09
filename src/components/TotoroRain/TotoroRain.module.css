@@ -42,18 +42,37 @@
   left: 0;
 }
 
-.totoro {
+.character-container {
   position: absolute;
   bottom: 75px;
-  right: 10%;
+  left: 50%; /* Position X halfway in */
+  transform: translate(-50%, 0%); /* Move it halfway back(x,y) */
+  display: flex;
+  align-items: end;
+
+  @media (max-width: 650px) {
+    justify-content: center;
+  }
 }
 
 .satsuki {
-  position: absolute;
-  bottom: 75px;
-  right: 40%;
+  position: relative;
 }
-
+.totoro {
+  position: relative;
+  @media (max-width: 650px) {
+    position: absolute;
+    z-index: -1;
+  }
+}
+.exclamation-mark {
+  display: block;
+  margin: 0 120px 20px auto;
+}
+.sound-button {
+  background-color: transparent;
+  border: none;
+}
 .eye-pupil {
   background-color: #10100e;
   width: 10px;

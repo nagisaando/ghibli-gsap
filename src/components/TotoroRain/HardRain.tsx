@@ -1,14 +1,19 @@
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface HardRainProps {
-  rainHard?: boolean;
+  rainHard: boolean;
+  setRainHard: Dispatch<SetStateAction<boolean>>;
 }
-function HardRain({ rainHard }: HardRainProps) {
+function HardRain({ rainHard, setRainHard }: HardRainProps) {
   useEffect(() => {
     if (rainHard) {
-      gsap.utils.toArray(".hard-rain").forEach((element) => {
+      const elements = gsap.utils.toArray(".hard-rain");
+      const totalElements = elements.length;
+      let completedCount = 0;
+
+      elements.forEach((element) => {
         const rainHeight = getRainHeight();
 
         const tl = gsap.timeline({
@@ -26,6 +31,13 @@ function HardRain({ rainHard }: HardRainProps) {
             top: "100%",
             duration: gsap.utils.random([1, 1.3]),
             ease: "none",
+            onComplete: () => {
+              completedCount += 1;
+              if (completedCount === totalElements) {
+                // Call setRainHard(false) after the last raindrop completes
+                setRainHard(false);
+              }
+            },
           }
         );
       });
@@ -35,7 +47,7 @@ function HardRain({ rainHard }: HardRainProps) {
         top: "-100%",
       });
     }
-  }, [rainHard]);
+  }, [rainHard, setRainHard]);
 
   function getRainHeight() {
     const min = 20;
