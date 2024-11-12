@@ -1,53 +1,57 @@
+import { useGSAP } from "@gsap/react";
 import styles from "./TotoroRain.module.css";
 import gsap from "gsap";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface HardRainProps {
   rainHard: boolean;
   setRainHard: Dispatch<SetStateAction<boolean>>;
 }
 function HardRain({ rainHard, setRainHard }: HardRainProps) {
-  useEffect(() => {
-    if (rainHard) {
-      const elements = gsap.utils.toArray(".hard-rain");
-      const totalElements = elements.length;
-      let completedCount = 0;
+  useGSAP(
+    () => {
+      if (rainHard) {
+        const elements = gsap.utils.toArray(".hard-rain");
+        const totalElements = elements.length;
+        let completedCount = 0;
 
-      elements.forEach((element) => {
-        const rainHeight = getRainHeight();
+        elements.forEach((element) => {
+          const rainHeight = getRainHeight();
 
-        const tl = gsap.timeline({
-          delay: gsap.utils.random(0, 3),
-        });
+          const tl = gsap.timeline({
+            delay: gsap.utils.random(0, 3),
+          });
 
-        tl.fromTo(
-          element as HTMLDivElement,
-          {
-            opacity: 0.4,
-            top: "-100%",
-            height: rainHeight,
-          },
-          {
-            top: "100%",
-            duration: gsap.utils.random([1, 1.3]),
-            ease: "none",
-            onComplete: () => {
-              completedCount += 1;
-              if (completedCount === totalElements) {
-                // Call setRainHard(false) after the last raindrop completes
-                setRainHard(false);
-              }
+          tl.fromTo(
+            element as HTMLDivElement,
+            {
+              opacity: 0.4,
+              top: "-100%",
+              height: rainHeight,
             },
-          }
-        );
-      });
-    } else {
-      gsap.set(".hard-rain", {
-        opacity: 0.2,
-        top: "-100%",
-      });
-    }
-  }, [rainHard, setRainHard]);
+            {
+              top: "100%",
+              duration: gsap.utils.random([1, 1.3]),
+              ease: "none",
+              onComplete: () => {
+                completedCount += 1;
+                if (completedCount === totalElements) {
+                  // Call setRainHard(false) after the last raindrop completes
+                  setRainHard(false);
+                }
+              },
+            }
+          );
+        });
+      } else {
+        gsap.set(".hard-rain", {
+          opacity: 0.2,
+          top: "-100%",
+        });
+      }
+    },
+    { dependencies: [rainHard, setRainHard] }
+  );
 
   function getRainHeight() {
     const min = 20;

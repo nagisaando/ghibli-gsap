@@ -15,8 +15,8 @@ function SoundButton({ rainHard }: SoundButtonProps) {
     audioRef: React.MutableRefObject<HTMLAudioElement>,
     direction: "in" | "out",
     maxSound: number = 1,
-    step: number = 0.1,
-    intervalTime: number = 100
+    step: number = 0.05,
+    intervalTime: number = 250
   ) {
     const targetVolume = direction === "in" ? maxSound : 0;
     const volumeChange = direction === "in" ? step : -step;
